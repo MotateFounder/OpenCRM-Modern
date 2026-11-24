@@ -1,0 +1,88 @@
+{
+  "name": "opencrm-modern",
+  "productName": "OpenCRM",
+  "version": "2.0.0",
+  "description": "Local-first, schema-driven desktop CRM with autosave and local AI.",
+  "main": "main.js",
+  "type": "module",
+  "author": "RollingSound",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "start": "electron .",
+    "icon": "node scripts/make-icon.js",
+    "dist": "electron-builder --win portable nsis",
+    "portable": "node scripts/make-portable.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "dompurify": "^3.4.17",
+    "exceljs": "^4.4.0",
+    "imapflow": "^2.11.0",
+    "juice": "^12.2.3",
+    "mailparser": "^3.14.3",
+    "mammoth": "^1.13.0",
+    "marked": "^18.2.0",
+    "nodemailer": "^10.5.0",
+    "papaparse": "^5.7.1",
+    "pdfjs-dist": "^6.5.438",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "electron": "^45.3.2",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.rollingsound.opencrm",
+    "productName": "OpenCRM",
+    "copyright": "GPL-3.0-or-later",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "main.js",
+      "app-main.js",
+      "preload.cjs",
+      "electron/**/*",
+      "src/**/*",
+      "assets/**/*",
+      "resources/tracker/**/*",
+      "docs/TUTORIAL.md",
+      "docs/screenshots/*.png",
+      "package.json",
+      "!**/*.map"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "portable": {
+      "artifactName": "OpenCRM-${version}-portable.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": false,
+      "createStartMenuShortcut": true,
+      "shortcutName": "OpenCRM",
+      "artifactName": "OpenCRM-Setup-${version}.exe",
+      "include": "assets/installer.nsh",
+      "runAfterFinish": true
+    }
+  }
+}
